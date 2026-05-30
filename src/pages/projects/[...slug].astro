@@ -1,6 +1,7 @@
 ---
 import EntryLayout from '../../layouts/EntryLayout.astro';
 import { getCollection, render } from 'astro:content';
+import { withBase } from '../../lib/path';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -21,7 +22,7 @@ const { Content } = await render(project);
   tags={project.data.tags}
   url={project.data.url}
   repo={project.data.repo}
-  backHref="/projects"
+  backHref={withBase('/projects')}
   backLabel="Projects"
 >
   <Content />

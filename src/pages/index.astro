@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import EntryCard from '../components/EntryCard.astro';
 import { getCollection } from 'astro:content';
+import { withBase } from '../lib/path';
 
 const projects = (await getCollection('projects'))
   .filter((p) => p.data.featured)
@@ -27,7 +28,7 @@ const posts = (await getCollection('blog'))
       figuring out along the way.
     </p>
     <div class="hero__cta">
-      <a href="/projects" class="btn">See my work</a>
+      <a href={withBase('/projects')} class="btn">See my work</a>
       <a href="mailto:you@example.com" class="link">Get in touch</a>
     </div>
   </section>
@@ -35,12 +36,12 @@ const posts = (await getCollection('blog'))
   <section class="block">
     <header class="block__head">
       <h2>Selected work</h2>
-      <a href="/projects" class="link">All projects →</a>
+      <a href={withBase('/projects')} class="link">All projects →</a>
     </header>
     <ul class="entry-list">
       {projects.map((p) => (
         <EntryCard
-          href={`/projects/${p.id}/`}
+          href={withBase(`/projects/${p.id}/`)}
           title={p.data.title}
           description={p.data.description}
           date={p.data.date}
@@ -53,12 +54,12 @@ const posts = (await getCollection('blog'))
   <section class="block">
     <header class="block__head">
       <h2>Recent writing</h2>
-      <a href="/blog" class="link">All posts →</a>
+      <a href={withBase('/blog')} class="link">All posts →</a>
     </header>
     <ul class="entry-list">
       {posts.map((p) => (
         <EntryCard
-          href={`/blog/${p.id}/`}
+          href={withBase(`/blog/${p.id}/`)}
           title={p.data.title}
           description={p.data.description}
           date={p.data.date}
