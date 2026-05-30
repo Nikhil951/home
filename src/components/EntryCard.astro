@@ -1,0 +1,28 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  date: Date;
+  tags?: string[];
+}
+const { href, title, description, date, tags = [] } = Astro.props;
+const displayDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short',
+});
+const isoDate = date.toISOString();
+---
+
+<li class="entry">
+  <time class="entry__date" datetime={isoDate}>{displayDate}</time>
+  <div>
+    <h3 class="entry__title"><a href={href} class="link">{title}</a></h3>
+    <p class="entry__desc">{description}</p>
+    {tags.length > 0 && (
+      <ul class="tags">
+        {tags.map((t) => <li class="tag">{t}</li>)}
+      </ul>
+    )}
+  </div>
+</li>

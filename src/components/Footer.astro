@@ -1,0 +1,35 @@
+---
+const year = new Date().getFullYear();
+const socials = [
+  { href: 'https://github.com/yourname', label: 'GitHub' },
+  { href: 'https://linkedin.com/in/yourname', label: 'LinkedIn' },
+  { href: 'mailto:you@example.com', label: 'Email' },
+];
+---
+
+<footer class="site-footer wrap">
+  <p>© {year} Your Name</p>
+  <nav aria-label="Social">
+    {socials.map((s) => (
+      <a href={s.href} class="link" rel="me noopener" target="_blank">{s.label}</a>
+    ))}
+  </nav>
+</footer>
+
+<style>
+  .site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    margin-top: 5rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+  }
+  .site-footer nav { display: flex; gap: 1.4rem; }
+</style>

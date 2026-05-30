@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EntryCard from '../../components/EntryCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Blog — Your Name" description="Writing on design, code, and process.">
+  <header class="page-head">
+    <p class="eyebrow">Blog</p>
+    <h1>Writing</h1>
+    <p class="prose" style="color: var(--ink-soft); font-size: 1.15rem;">
+      Notes on what I'm building, learning, and thinking about.
+    </p>
+  </header>
+
+  <ul class="entry-list">
+    {posts.map((p) => (
+      <EntryCard
+        href={`/blog/${p.id}/`}
+        title={p.data.title}
+        description={p.data.description}
+        date={p.data.date}
+        tags={p.data.tags}
+      />
+    ))}
+  </ul>
+</BaseLayout>
+
+<style>
+  .page-head { padding: clamp(1.5rem, 5vw, 3rem) 0 2rem; }
+  .page-head h1 { margin: 0.8rem 0 1rem; }
+</style>

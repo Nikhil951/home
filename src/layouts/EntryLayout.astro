@@ -1,0 +1,70 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  tags?: string[];
+  url?: string;
+  repo?: string;
+  backHref: string;
+  backLabel: string;
+}
+const { title, description, date, tags = [], url, repo, backHref, backLabel } =
+  Astro.props;
+const displayDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={title} description={description}>
+  <article>
+    <a href={backHref} class="back">← {backLabel}</a>
+
+    <header class="entry-head">
+      <time class="eyebrow" datetime={date.toISOString()}>{displayDate}</time>
+      <h1>{title}</h1>
+      <p class="lede">{description}</p>
+
+      {(url || repo || tags.length > 0) && (
+        <div class="meta">
+          {url && <a href={url} class="link" target="_blank" rel="noopener">Live ↗</a>}
+          {repo && <a href={repo} class="link" target="_blank" rel="noopener">Source ↗</a>}
+          {tags.map((t) => <span class="tag">{t}</span>)}
+        </div>
+      )}
+    </header>
+
+    <hr class="divider" />
+
+    <div class="article-body">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  article { max-width: var(--measure); margin-inline: auto; }
+  .back {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+    margin-bottom: 2.5rem;
+  }
+  .back:hover { color: var(--accent); }
+  .entry-head { margin-bottom: 2rem; }
+  .entry-head h1 { margin: 0.6rem 0 1rem; }
+  .lede { font-size: 1.2rem; color: var(--ink-soft); }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.4rem;
+  }
+</style>

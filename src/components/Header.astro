@@ -1,0 +1,52 @@
+---
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/blog', label: 'Blog' },
+];
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+---
+
+<header class="site-header wrap">
+  <a href="/" class="site-mark">YN<span>.</span></a>
+  <nav aria-label="Primary">
+    {links.map((l) => (
+      <a href={l.href} class:list={['nav-link', { active: isActive(l.href) }]}>
+        {l.label}
+      </a>
+    ))}
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1.6rem;
+    padding-bottom: 1.6rem;
+  }
+  .site-mark {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.4rem;
+    letter-spacing: -0.03em;
+    text-decoration: none;
+  }
+  .site-mark span { color: var(--accent); }
+  nav { display: flex; gap: clamp(1rem, 4vw, 2.2rem); }
+  .nav-link {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    color: var(--ink-soft);
+    padding-bottom: 2px;
+    border-bottom: 1.5px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .nav-link:hover { color: var(--ink); }
+  .nav-link.active { color: var(--ink); border-color: var(--accent); }
+</style>
