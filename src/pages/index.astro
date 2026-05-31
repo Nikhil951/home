@@ -1,5 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import EntryCard from '../components/EntryCard.astro';
+import { getCollection } from 'astro:content';
+import { withBase } from '../lib/path';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
 
 const focusAreas = [
   {
@@ -101,6 +109,26 @@ const focusAreas = [
       ))}
     </ul>
   </section>
+
+  {posts.length > 0 && (
+    <section id="writing" class="block">
+      <header class="block__head">
+        <h2>Writing</h2>
+        <a href={withBase('/blog')} class="link">All posts →</a>
+      </header>
+      <ul class="entry-list">
+        {posts.map((p) => (
+          <EntryCard
+            href={withBase(`/blog/${p.id}/`)}
+            title={p.data.title}
+            description={p.data.description}
+            date={p.data.date}
+            tags={p.data.tags}
+          />
+        ))}
+      </ul>
+    </section>
+  )}
 </BaseLayout>
 
 <style>
