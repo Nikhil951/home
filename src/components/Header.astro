@@ -13,7 +13,7 @@ const isActive = (href: string) => {
 ---
 
 <header class="site-header wrap">
-  <a href={withBase('/')} class="site-mark">YN<span>.</span></a>
+  <a href={withBase('/')} class="site-mark">NT<span>.</span></a>
   <nav aria-label="Primary">
     {links.map((l) => (
       <a href={withBase(l.href)} class:list={['nav-link', { active: isActive(l.href) }]}>
