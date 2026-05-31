@@ -1,22 +1,18 @@
 ---
 import { withBase } from '../lib/path';
+const home = withBase('/');
 const links = [
-  { href: '/', label: 'Home' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/blog', label: 'Blog' },
+  { href: `${home}#about`, label: 'About' },
+  { href: `${home}#focus`, label: 'Focus' },
+  { href: 'mailto:nikhiltiwari951@gmail.com', label: 'Contact' },
 ];
-const path = Astro.url.pathname;
-const isActive = (href: string) => {
-  const full = withBase(href);
-  return href === '/' ? path === full : path.startsWith(full);
-};
 ---
 
 <header class="site-header wrap">
-  <a href={withBase('/')} class="site-mark">NT<span>.</span></a>
+  <a href={home} class="site-mark">NT<span>.</span></a>
   <nav aria-label="Primary">
     {links.map((l) => (
-      <a href={withBase(l.href)} class:list={['nav-link', { active: isActive(l.href) }]}>
+      <a href={l.href} class="nav-link">
         {l.label}
       </a>
     ))}

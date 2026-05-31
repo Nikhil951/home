@@ -1,70 +1,103 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import EntryCard from '../components/EntryCard.astro';
-import { getCollection } from 'astro:content';
-import { withBase } from '../lib/path';
 
-const projects = (await getCollection('projects'))
-  .filter((p) => p.data.featured)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
-
-const posts = (await getCollection('blog'))
-  .filter((p) => !p.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
+const focusAreas = [
+  {
+    title: 'Engineering Leadership',
+    desc: 'Guiding technical direction and decision-making across teams and platforms.',
+  },
+  {
+    title: 'Distributed Systems & Scalability',
+    desc: 'Designing high-volume backend systems that stay reliable as they grow.',
+  },
+  {
+    title: 'System Design & Architecture',
+    desc: 'Shaping pragmatic architectures that balance trade-offs with business outcomes.',
+  },
+  {
+    title: 'Platform Engineering',
+    desc: 'Building the foundations and tooling that let product teams move faster.',
+  },
+  {
+    title: 'Cloud & Microservices',
+    desc: 'Cloud-native services designed for resilience, scale, and operability.',
+  },
+  {
+    title: 'Elasticsearch & Search',
+    desc: 'Powering fast, relevant search across large and complex datasets.',
+  },
+  {
+    title: 'Reliability & Observability',
+    desc: 'Instrumenting systems for visibility and engineering for uptime.',
+  },
+  {
+    title: 'Technical Mentorship',
+    desc: 'Helping engineers grow and teams collaborate with lasting impact.',
+  },
+];
 ---
 
-<BaseLayout title="Nikhil Tiwari — Portfolio">
+<BaseLayout
+  title="Nikhil Tiwari — Staff Engineer"
+  description="Nikhil Tiwari — Staff Engineer working across distributed systems, platform engineering, and engineering leadership."
+>
   <section class="hero">
-    <p class="eyebrow">Designer & Developer</p>
+    <p class="eyebrow">Staff Engineer · Engineering Leadership</p>
     <h1>
-      I build thoughtful, fast,<br />
-      <em>human</em> software for the web.
+      I scale both <em>systems</em><br />
+      and <em>people</em>.
     </h1>
     <p class="hero__lede prose">
-      Hi, I'm Nikhil Tiwari. I design and ship products end to end — from the first
-      sketch to the last deploy. This is where I keep my work and the things I'm
-      figuring out along the way.
+      I lead technical initiatives across distributed platforms — driving
+      architecture decisions, engineering excellence, and cross-functional
+      collaboration to deliver reliable, scalable products.
     </p>
     <div class="hero__cta">
-      <a href={withBase('/projects')} class="btn">See my work</a>
-      <a href="mailto:nikhiltiwari951@gmail.com" class="link">Get in touch</a>
+      <a href="mailto:nikhiltiwari951@gmail.com" class="btn">Get in touch</a>
+      <a
+        href="https://www.linkedin.com/in/nikhil-tiwari-265562105/"
+        class="link"
+        target="_blank"
+        rel="noopener"
+      >LinkedIn ↗</a>
     </div>
   </section>
 
-  <section class="block">
+  <section id="about" class="block">
     <header class="block__head">
-      <h2>Selected work</h2>
-      <a href={withBase('/projects')} class="link">All projects →</a>
+      <h2>About</h2>
     </header>
-    <ul class="entry-list">
-      {projects.map((p) => (
-        <EntryCard
-          href={withBase(`/projects/${p.id}/`)}
-          title={p.data.title}
-          description={p.data.description}
-          date={p.data.date}
-          tags={p.data.tags}
-        />
-      ))}
-    </ul>
+    <div class="prose about">
+      <p>
+        I lead technical initiatives across distributed platforms, driving
+        architecture decisions, engineering excellence, and cross-functional
+        collaboration to deliver reliable, scalable products. My experience
+        spans high-volume backend systems, travel commerce platforms, platform
+        engineering, and cloud-native architectures.
+      </p>
+      <p>
+        Beyond technology, I enjoy mentoring engineers, influencing technical
+        strategy, and helping teams navigate complex challenges while
+        maintaining a strong focus on business outcomes.
+      </p>
+      <blockquote>
+        Great engineering is not only about building systems that scale, but
+        also about enabling teams to grow, collaborate effectively, and deliver
+        meaningful impact.
+      </blockquote>
+    </div>
   </section>
 
-  <section class="block">
+  <section id="focus" class="block">
     <header class="block__head">
-      <h2>Recent writing</h2>
-      <a href={withBase('/blog')} class="link">All posts →</a>
+      <h2>Areas of focus</h2>
     </header>
-    <ul class="entry-list">
-      {posts.map((p) => (
-        <EntryCard
-          href={withBase(`/blog/${p.id}/`)}
-          title={p.data.title}
-          description={p.data.description}
-          date={p.data.date}
-          tags={p.data.tags}
-        />
+    <ul class="focus-grid">
+      {focusAreas.map((a) => (
+        <li class="focus-card">
+          <h3>{a.title}</h3>
+          <p>{a.desc}</p>
+        </li>
       ))}
     </ul>
   </section>
@@ -95,12 +128,49 @@ const posts = (await getCollection('blog'))
     transition: background 0.2s, transform 0.2s;
   }
   .btn:hover { background: var(--accent-deep); transform: translateY(-1px); }
+
   .block { margin-top: clamp(3rem, 7vw, 5rem); }
   .block__head {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
     gap: 1rem;
+    margin-bottom: 1.5rem;
   }
-  .block__head .link { font-family: var(--font-mono); font-size: 0.8rem; }
+
+  .about p { font-size: 1.1rem; color: var(--ink-soft); }
+  .about blockquote {
+    margin: 2rem 0 0;
+    padding-left: 1.4rem;
+    border-left: 2px solid var(--accent);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  .focus-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1.2rem;
+  }
+  .focus-card {
+    padding: 1.4rem;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .focus-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .focus-card h3 {
+    font-size: 1rem;
+    margin: 0 0 0.5rem;
+  }
+  .focus-card p {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
 </style>
