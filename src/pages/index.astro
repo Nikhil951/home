@@ -50,10 +50,10 @@ const focusAreas = [
   description="Nikhil Tiwari — Staff Engineer working across distributed systems, platform engineering, and engineering leadership."
 >
   <section class="hero">
-    <p class="eyebrow">Staff Engineer · Engineering Leadership</p>
+    <p class="eyebrow eyebrow--accent">Staff Engineer · Engineering Leadership</p>
     <h1>
-      I scale both <em>systems</em><br />
-      and <em>people</em>.
+      I scale both <span class="accent">systems</span><br />
+      and <span class="accent">people</span>.
     </h1>
     <p class="hero__lede prose">
       I lead technical initiatives across distributed platforms — driving
@@ -101,8 +101,9 @@ const focusAreas = [
       <h2>Areas of focus</h2>
     </header>
     <ul class="focus-grid">
-      {focusAreas.map((a) => (
-        <li class="focus-card">
+      {focusAreas.map((a, i) => (
+        <li class="focus-item">
+          <span class="focus-item__num">{String(i + 1).padStart(2, '0')}</span>
           <h3>{a.title}</h3>
           <p>{a.desc}</p>
         </li>
@@ -132,30 +133,35 @@ const focusAreas = [
 </BaseLayout>
 
 <style>
-  .hero { padding: clamp(2rem, 8vw, 6rem) 0 clamp(3rem, 6vw, 5rem); }
-  .hero h1 { margin: 1rem 0 1.5rem; }
-  .hero h1 em { color: var(--accent); font-style: italic; }
-  .hero__lede { font-size: 1.2rem; color: var(--ink-soft); }
+  .hero {
+    padding: clamp(2.5rem, 9vw, 7rem) 0 clamp(3rem, 7vw, 5.5rem);
+    border-bottom: 1px solid var(--line);
+  }
+  .eyebrow--accent { color: var(--accent); }
+  .hero h1 { margin: 1.25rem 0 1.5rem; max-width: 18ch; }
+  .hero h1 .accent { color: var(--accent); }
+  .hero__lede { font-size: 1.15rem; color: var(--ink-soft); }
   .hero__cta {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 1.5rem;
-    margin-top: 2rem;
+    margin-top: 2.25rem;
   }
   .btn {
     display: inline-block;
     background: var(--accent);
-    color: #fff;
+    color: var(--accent-contrast);
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     letter-spacing: 0.04em;
+    text-transform: uppercase;
     text-decoration: none;
-    padding: 0.7rem 1.4rem;
-    border-radius: 999px;
-    transition: background 0.2s, transform 0.2s;
+    padding: 0.7rem 1.3rem;
+    border-radius: 3px;
+    transition: background 0.15s ease;
   }
-  .btn:hover { background: var(--accent-deep); transform: translateY(-1px); }
+  .btn:hover { background: var(--accent-deep); }
 
   .block { margin-top: clamp(3rem, 7vw, 5rem); }
   .block__head {
@@ -163,42 +169,48 @@ const focusAreas = [
     align-items: baseline;
     justify-content: space-between;
     gap: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--line);
   }
 
   .about p { font-size: 1.1rem; color: var(--ink-soft); }
   .about blockquote {
     margin: 2rem 0 0;
-    padding-left: 1.4rem;
+    padding-left: 1.25rem;
     border-left: 2px solid var(--accent);
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-style: italic;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 1.2rem;
     color: var(--ink);
   }
 
+  /* strict hairline grid */
   .focus-grid {
     list-style: none;
     padding: 0;
     margin: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: 1.2rem;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
   }
-  .focus-card {
-    padding: 1.4rem;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    transition: border-color 0.2s, transform 0.2s;
+  .focus-item {
+    padding: 1.5rem;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
   }
-  .focus-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-  .focus-card h3 {
-    font-size: 1rem;
-    margin: 0 0 0.5rem;
+  .focus-item__num {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--ink-faint);
+    margin-bottom: 0.6rem;
   }
-  .focus-card p {
-    font-size: 0.9rem;
-    color: var(--ink-soft);
-    margin: 0;
+  .focus-item h3 { font-size: 1rem; font-weight: 600; margin: 0 0 0.4rem; }
+  .focus-item p { font-size: 0.9rem; color: var(--ink-soft); margin: 0; }
+
+  @media (max-width: 38rem) {
+    .focus-grid { grid-template-columns: 1fr; }
   }
 </style>
